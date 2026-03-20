@@ -3,3 +3,4 @@ obj/
 .vs/
 *.user
 *.suo
+git rm -r --cached bin obj .vsgigitt
