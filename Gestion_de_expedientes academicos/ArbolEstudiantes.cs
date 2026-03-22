@@ -35,6 +35,9 @@ namespace Gestion_de_expedientes_academicos
             return insertado;
         }
 
+
+
+
         public Estudiante? Buscar(NodoArbol? nodo, int carnet)
         {
             if (nodo == null)
@@ -63,7 +66,7 @@ namespace Gestion_de_expedientes_academicos
             if (nodo != null)
             {
                 InOrder(nodo.Izquierdo);
-                Console.WriteLine ($"Carmet: {nodo.Dato.Carnet} | Carrera : {nodo.Dato.Carrera} | Promedio: {nodo.Dato.Promedio} | Créditos: {nodo.Dato.Creditos}");
+                Console.WriteLine ($"Carnet: {nodo.Dato.Carnet} | Carrera : {nodo.Dato.Carrera} | Promedio: {nodo.Dato.Promedio} | Créditos: {nodo.Dato.Creditos}");
                 InOrder(nodo.Derecho); 
             }
         }
@@ -76,6 +79,71 @@ namespace Gestion_de_expedientes_academicos
             }
             InOrder(Raiz);
         }
+
+
+        private NodoArbol ObtenerMinimo(NodoArbol nodo)
+        {
+            while (nodo.Izquierdo != null)
+            {
+                nodo = nodo.Izquierdo;
+            }
+            return nodo;
+        }
+        // esto ayuda en caso de que el nodo tenga dos hijos, y siempre ira a la izquierda para bucar el mas pequeño
+
+        private NodoArbol? Eliminar(NodoArbol? nodo, int carnet, ref bool eliminado)
+        {
+            if (nodo == null)
+            {
+                eliminado = false;
+                return null;
+            }
+
+            if (carnet < nodo.Dato.Carnet)
+            {
+                nodo.Izquierdo = Eliminar(nodo.Izquierdo, carnet, ref eliminado);
+            }
+            else if (carnet > nodo.Dato.Carnet)
+            {
+                nodo.Derecho = Eliminar(nodo.Derecho, carnet, ref eliminado);
+            }
+            else
+            {
+                eliminado = true;
+
+                if (nodo.Izquierdo == null && nodo.Derecho == null)
+                {
+                    return null;
+                }
+
+                if (nodo.Izquierdo == null)
+                {
+                    return nodo.Derecho;
+                }
+
+                if (nodo.Derecho == null)
+                {
+                    return nodo.Izquierdo;
+                }
+
+                //busca el menor subarbol derecho para hacerlo sucesor
+                NodoArbol sucesor = ObtenerMinimo(nodo.Derecho);
+                nodo.Dato = sucesor.Dato;
+                nodo.Derecho = Eliminar(nodo.Derecho, sucesor.Dato.Carnet, ref eliminado);
+            }
+
+            return nodo;
+        }
+
+        
+        public bool Eliminar(int carnet)
+        {
+            bool eliminado = false;
+            Raiz = Eliminar(Raiz, carnet, ref eliminado);
+            return eliminado;
+        }//solo para confirmar que el estudiante ha sido eliminado
+
+
     }
 }
 

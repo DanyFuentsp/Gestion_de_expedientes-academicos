@@ -45,7 +45,7 @@ public class Program
                     break;
 
                 case 3:
-                    Console.WriteLine("Eliminar estudiante: función no implementada aún.");
+                    EliminarEstudiante(arbol);
                     break;
 
                 case 4:
@@ -58,6 +58,8 @@ public class Program
                 case 8:
                     return;
             }
+        }
+    } //MAIN
 
             static void InsertarEstudiante(ArbolEstudiantes arbol)
             {
@@ -96,8 +98,8 @@ public class Program
                     Console.WriteLine("No se pudo insertar el estudiante. El número de expediente ya existe.");
                 }
 
-            }
-        }
+            }//Insertar estudiantes
+
         static void BuscarEstudiante(ArbolEstudiantes arbol)
         {
             Console.Write("Ingrese carnet a buscar: ");
@@ -124,6 +126,35 @@ public class Program
             {
                 Console.WriteLine("Estudiante no encontrado.");
             }
+        }// buscar estudiantes
+
+
+        static void EliminarEstudiante(ArbolEstudiantes arbol)
+        {
+        
+        Console.Write("Ingrese carnet del estudiante a eliminar: ");
+
+        int carnet;
+        while (!int.TryParse(Console.ReadLine(), out carnet))
+        {
+            Console.WriteLine("Número inválido. Ingrese un carnet válido:");
         }
+
+        bool eliminado = arbol.Eliminar(carnet);
+
+        if (eliminado)
+        {
+            Console.WriteLine("Estudiante eliminado correctamente.");
+        }
+        else
+        {
+            Console.WriteLine("No se encontró un estudiante con ese carnet.");
+        }
+
+
     }
+
+
+
+
 }
