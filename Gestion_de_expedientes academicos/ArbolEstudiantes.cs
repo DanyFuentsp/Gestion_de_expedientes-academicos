@@ -199,44 +199,6 @@ namespace Gestion_de_expedientes_academicos
             ContarCarreras(nodo.Derecho, conteo);
         }
 
-
-
-
-        //public void EstadisticasPorCarrera(NodoArbol? nodo, Dictionary<string, (int cantidad, double promedio)> estadisticas)
-        //{
-        //    if (nodo == null)
-        //        return;
-        //    string carrera = nodo.Dato.Carrera;
-        //    if (!estadisticas.ContainsKey(carrera))
-        //    {
-        //        estadisticas[carrera] = (0, 0.0);
-        //    }
-        //    var (cantidad, promedio) = estadisticas[carrera];
-        //    cantidad++;
-
-        //    promedio += nodo.Dato.Promedio;
-        //    estadisticas[carrera] = (cantidad, promedio);
-        //    EstadisticasPorCarrera(nodo.Izquierdo, estadisticas);
-        //    EstadisticasPorCarrera(nodo.Derecho, estadisticas);
-        //}
-
-        //public Dictionary<string, (int cantidad, double promedio)> ObtenerEstadisticasPorCarrera()
-        //{
-        //    var estadisticas = new Dictionary<string, (int cantidad, double promedio)>();
-        //    EstadisticasPorCarrera(Raiz, estadisticas);
-        //    foreach (var key in estadisticas.Keys)
-        //    {
-        //        var (cantidad, promedio) = estadisticas[key];
-        //        if (cantidad > 0)
-        //        {
-        //            promedio /= cantidad; // Calcula el promedio real dividiendo la suma por la cantidad
-        //            estadisticas[key] = (cantidad, promedio);
-        //        }
-        //    }
-        //    return estadisticas;
-        //}
-
-
     }
 
 
