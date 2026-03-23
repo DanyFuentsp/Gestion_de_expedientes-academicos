@@ -1,5 +1,6 @@
 ﻿using Gestion_de_expedientes_academicos;
 using System;
+using System.Collections;
 
 public class Program
 {
@@ -16,6 +17,7 @@ public class Program
         Console.WriteLine("Tipo de Arbol Usado: AVL");
 
         ArbolEstudiantes arbol = new ArbolEstudiantes();
+        
 
         while (true)
         {
@@ -52,7 +54,7 @@ public class Program
                     arbol.ListarInOrder();
                     break;
                 case 5:
-                    Console.WriteLine("Estadísticas: función no implementada aún.");
+                    Estadisticas(arbol);
                     break;
 
                 case 8:
@@ -129,6 +131,9 @@ public class Program
         }// buscar estudiantes
 
 
+
+
+
         static void EliminarEstudiante(ArbolEstudiantes arbol)
         {
         
@@ -152,9 +157,28 @@ public class Program
         }
 
 
+        }
+
+
+
+    static void Estadisticas(ArbolEstudiantes arbol)
+    {
+        Console.WriteLine("\n--- ESTADÍSTICAS ---");
+        Console.WriteLine("Total estudiantes: " + arbol.Contarestudiantes(arbol.Raiz));
+        Console.WriteLine("Altura del árbol: " + arbol.AlturaArbol(arbol.Raiz));
+        var carreras = new Dictionary<string, int>();
+        Console.WriteLine("\nEstudiantes por carrera:");
+
+        var stats = arbol.EstadisticasPorCarrera();
+
+        foreach (var item in stats)
+        {
+            Console.WriteLine(item.Key + ": " + item.Value);
+        }
     }
-
-
-
-
 }
+
+
+
+
+

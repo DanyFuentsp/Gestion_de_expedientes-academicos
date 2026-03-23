@@ -60,14 +60,14 @@ namespace Gestion_de_expedientes_academicos
             return Buscar(Raiz, carnet);
 
         }
-        
+
         public void InOrder(NodoArbol? nodo)
         {
             if (nodo != null)
             {
                 InOrder(nodo.Izquierdo);
-                Console.WriteLine ($"Carnet: {nodo.Dato.Carnet} | Carrera : {nodo.Dato.Carrera} | Promedio: {nodo.Dato.Promedio} | Créditos: {nodo.Dato.Creditos}");
-                InOrder(nodo.Derecho); 
+                Console.WriteLine($"Carnet: {nodo.Dato.Carnet} | Carrera : {nodo.Dato.Carrera} | Promedio: {nodo.Dato.Promedio} | Créditos: {nodo.Dato.Creditos}");
+                InOrder(nodo.Derecho);
             }
         }
         public void ListarInOrder()
@@ -135,7 +135,7 @@ namespace Gestion_de_expedientes_academicos
             return nodo;
         }
 
-        
+
         public bool Eliminar(int carnet)
         {
             bool eliminado = false;
@@ -144,7 +144,102 @@ namespace Gestion_de_expedientes_academicos
         }//solo para confirmar que el estudiante ha sido eliminado
 
 
+
+
+
+        //mostrar estadisticas del arbol, como altura, cantidad de nodos, etc
+
+
+
+        public int Contarestudiantes(NodoArbol? nodo)
+        {
+            return ContarRecursivo(Raiz);
+        }
+
+        public int ContarRecursivo(NodoArbol? nodo)
+        {
+            if (nodo == null)
+                return 0;
+            return 1 + ContarRecursivo(nodo.Izquierdo) + ContarRecursivo(nodo.Derecho);
+        }
+
+        public int AlturaArbol(NodoArbol? nodo)
+        {
+            if (nodo == null)
+                return 0;
+            int alturaIzquierda = AlturaArbol(nodo.Izquierdo);
+            int alturaDerecha = AlturaArbol(nodo.Derecho);
+            return Math.Max(alturaIzquierda, alturaDerecha) + 1;
+
+        }
+
+
+        //si deseamos sacar estadisticas por carrera, como promedio de cada carrera, cantidad de estudiantes por carrera, etc, se puede hacer un recorrido del arbol y acumular esa informacion en un diccionario o algo similar para luego mostrarla al usuario.
+
+
+
+        public Dictionary<string, int> EstadisticasPorCarrera()
+        {
+            var conteo = new Dictionary<string, int>();
+            ContarCarreras(Raiz, conteo);
+            return conteo;
+        }
+
+        private void ContarCarreras(NodoArbol? nodo, Dictionary<string, int> conteo)
+        {
+            if (nodo == null) return;
+
+            string carrera = nodo.Dato.Carrera;
+
+            conteo[carrera] = conteo.ContainsKey(carrera)
+                ? conteo[carrera] + 1
+                : 1;
+
+            ContarCarreras(nodo.Izquierdo, conteo);
+            ContarCarreras(nodo.Derecho, conteo);
+        }
+
+
+
+
+        //public void EstadisticasPorCarrera(NodoArbol? nodo, Dictionary<string, (int cantidad, double promedio)> estadisticas)
+        //{
+        //    if (nodo == null)
+        //        return;
+        //    string carrera = nodo.Dato.Carrera;
+        //    if (!estadisticas.ContainsKey(carrera))
+        //    {
+        //        estadisticas[carrera] = (0, 0.0);
+        //    }
+        //    var (cantidad, promedio) = estadisticas[carrera];
+        //    cantidad++;
+
+        //    promedio += nodo.Dato.Promedio;
+        //    estadisticas[carrera] = (cantidad, promedio);
+        //    EstadisticasPorCarrera(nodo.Izquierdo, estadisticas);
+        //    EstadisticasPorCarrera(nodo.Derecho, estadisticas);
+        //}
+
+        //public Dictionary<string, (int cantidad, double promedio)> ObtenerEstadisticasPorCarrera()
+        //{
+        //    var estadisticas = new Dictionary<string, (int cantidad, double promedio)>();
+        //    EstadisticasPorCarrera(Raiz, estadisticas);
+        //    foreach (var key in estadisticas.Keys)
+        //    {
+        //        var (cantidad, promedio) = estadisticas[key];
+        //        if (cantidad > 0)
+        //        {
+        //            promedio /= cantidad; // Calcula el promedio real dividiendo la suma por la cantidad
+        //            estadisticas[key] = (cantidad, promedio);
+        //        }
+        //    }
+        //    return estadisticas;
+        //}
+
+
     }
+
+
 }
 
 
